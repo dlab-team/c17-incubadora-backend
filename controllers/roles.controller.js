@@ -1,37 +1,52 @@
 const db = require("../models");
-const Roles = db.roless;
+const Roles = db.roles;
+const Users = db.users;
 const Op = db.Sequelize.Op;
 
 
 
-exports.create = (req, res) => {
-    
-    // Validate request
-    if (!req.body.title) {
-      res.status(400).send({
-        message: "Content can not be empty!"
-      });
-      return;
-    }
-  
-    // Create a Roles
-    const Roles = {
-      title: req.body.title,
-      description: req.body.description,
-      published: req.body.published ? req.body.published : false
-    };
-  
-    // Save Roles in the database
-    Roles.create(Roles)
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while creating the Roles."
-        });
-      });
+exports.create = (roles) => {
+  return Roles.create({
+    name: roles.name,
+  })
+    .then((roles) => {
+      console.log(">> Created roles: " + JSON.stringify(roles, null, 4));
+      return roles;
+    })
+    .catch((err) => {
+      console.log(">> Error while creating roles: ", err);
+    });
+};
+
+
+//Crear y guardar nuevos comentarios
+
+exports.createUsers = (rolesId, users) => {
+  return Users.create({
+    name: users.name,
+    last_name: users.last_name,
+    email: users.email,
+    password: users.password,
+    roleId: rolesId,
+  })
+    .then((users) => {
+      console.log(">> Created users: " + JSON.stringify(users, null, 4));
+      return users;
+    })
+    .catch((err) => {
+      console.log(">> Error while creating users: ", err);
+    });
+};
+
+
+  // Obtener todos los tutoriales incluyen comentarios
+
+  exports.findAll = () => {
+    return Roles.findAll({
+      include: ["users"],
+    }).then((roles) => {
+      return roles;
+    });
   };
 
 

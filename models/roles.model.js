@@ -1,10 +1,10 @@
-module.exports = (sequelize, Sequelize) => {
-    const Roles = sequelize.define("roles", {
+module.exports = (sequelize, DataTypes) => {
+    const Role = sequelize.define("roles", {
       name: {
-        type: Sequelize.STRING
-      }
+        type: DataTypes.STRING
+      },
       
     });
   
-    return Roles;
+    return Role;
   };
