@@ -1,8 +1,38 @@
 
 const db = require("../models");
 const Roles = db.roles;
-const Users = db.users;
 const Op = db.Sequelize.Op;
+
+
+
+exports.createJson = (req, res) => {
+  
+  // Validate request
+  
+  if (!req.body.name) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  }
+  
+  // Create a Tutorial
+  const roles = {
+    name: req.body.name
+  };
+
+  // Save Tutorial in the database
+  Roles.create(roles)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the Tutorial."
+      });
+    });
+};
 
 
 

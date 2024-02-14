@@ -5,13 +5,14 @@ const Users = db.users;
 
 //Crear y guardar nuevos comentarios
 
-exports.createUsers = (rolesId, users) => {
+exports.createUsers = (rolesId, user_statusesId, users) => {
   return Users.create({
     name: users.name,
     last_name: users.last_name,
     email: users.email,
     password: users.password,
     roleId: rolesId,
+    userStatusId: user_statusesId,
   })
     .then((users) => {
       console.log(">> Created users: " + JSON.stringify(users, null, 4));
