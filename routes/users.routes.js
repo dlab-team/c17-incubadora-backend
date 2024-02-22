@@ -4,13 +4,10 @@ module.exports = app => {
     var router = require("express").Router();
   
     // Create a new Tutorial
-    router.post("/", users.create);
+    router.post("/", users.createJson);
   
-    // Retrieve all roles
+    // Retrieve all users
     router.get("/", users.findAll);
-  
-    // Retrieve all published roles
-    router.get("/published", users.findAllPublished);
   
     // Retrieve a single Tutorial with id
     router.get("/:id", users.findOne);
@@ -18,11 +15,7 @@ module.exports = app => {
     // Update a Tutorial with id
     router.put("/:id", users.update);
   
-    // Delete a Tutorial with id
-    router.delete("/:id", users.delete);
+   
   
-    // Delete all roles
-    router.delete("/", users.deleteAll);
-  
-    app.use('/api/users', users);
+    app.use('/api/users', router);
   };

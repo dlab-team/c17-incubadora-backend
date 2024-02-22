@@ -6,6 +6,33 @@ const Op = db.Sequelize.Op;
 
 
 
+exports.createJson = (req, res) => {
+  
+  if (!req.body.name) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  }
+  
+  const user_statuses = {
+    name: req.body.name
+  };
+
+  
+  User_statuses.create(user_statuses)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the Tutorial."
+      });
+    });
+};
+
+
 exports.create = (user_statuses) => {
   return User_statuses.create({
     name: user_statuses.name,
@@ -23,8 +50,8 @@ exports.create = (user_statuses) => {
 
 exports.findAll = (req, res) => {
   
-  const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  const name = req.query.name;
+  var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
 
   User_statuses.findAll({ where: condition })
     .then(data => {

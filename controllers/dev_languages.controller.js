@@ -5,7 +5,34 @@ const Op = db.Sequelize.Op;
 
 
 
-exports.createDev_languages = (dev_languages) => {
+exports.createJson = (req, res) => {
+  
+  if (!req.body.name) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  }
+  
+  const dev_languages = {
+    name: req.body.name
+  };
+
+  
+  Dev_languages.create(dev_languages)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the Tutorial."
+      });
+    });
+};
+
+
+exports.create = (dev_languages) => {
   return Dev_languages.create({
     name: dev_languages.name,
   })
@@ -22,8 +49,8 @@ exports.createDev_languages = (dev_languages) => {
 
 exports.findAll = (req, res) => {
   
-  const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  const name = req.query.name;
+  var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
 
   Dev_languages.findAll({ where: condition })
     .then(data => {

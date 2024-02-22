@@ -5,7 +5,38 @@ const Op = db.Sequelize.Op;
 
 
 
-exports.createEducation_experiences = (education_experiences) => {
+exports.createJson = (req, res) => {
+  
+  if (!req.body.institute_name) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  }
+  
+  const education_experiences = {
+    institute_name: req.body.institute_name,
+    type: req.body.type,
+    area: req.body.area,
+    name: req.body.name,
+    graduation_year: req.body.graduation_year
+  };
+
+  
+  Education_experiences.create(education_experiences)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the Tutorial."
+      });
+    });
+};
+
+
+exports.create = (education_experiences) => {
   return Education_experiences.create({
     institute_name: education_experiences.institute_name,
     type: education_experiences.type,
@@ -26,8 +57,8 @@ exports.createEducation_experiences = (education_experiences) => {
 
 exports.findAll = (req, res) => {
   
-  const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  const institute_name = req.query.institute_name;
+  var condition = institute_name ? { institute_name: { [Op.like]: `%${institute_name}%` } } : null;
 
   Education_experiences.findAll({ where: condition })
     .then(data => {

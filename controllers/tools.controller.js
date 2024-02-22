@@ -5,7 +5,35 @@ const Op = db.Sequelize.Op;
 
 
 
-exports.createTools = (tools) => {
+exports.createJson = (req, res) => {
+  
+  if (!req.body.name) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  }
+  
+  const tools = {
+    name: req.body.name
+  };
+
+  
+  Tools.create(tools)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the Tutorial."
+      });
+    });
+};
+
+
+
+exports.create = (tools) => {
   return Tools.create({
     name: tools.name,
   })
@@ -22,8 +50,8 @@ exports.createTools = (tools) => {
 
 exports.findAll = (req, res) => {
   
-  const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  const name = req.query.name;
+  var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
 
   Tools.findAll({ where: condition })
     .then(data => {

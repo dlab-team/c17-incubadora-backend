@@ -5,7 +5,34 @@ const Op = db.Sequelize.Op;
 
 
 
-exports.createSoft_skills = (soft_skills) => {
+exports.createJson = (req, res) => {
+  
+  if (!req.body.name) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  }
+  
+  const soft_skills = {
+    name: req.body.name
+  };
+
+  
+  Soft_skills.create(soft_skills)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the Tutorial."
+      });
+    });
+};
+
+
+exports.create = (soft_skills) => {
   return Soft_skills.create({
     name: soft_skills.name,
   })
@@ -22,8 +49,8 @@ exports.createSoft_skills = (soft_skills) => {
 
 exports.findAll = (req, res) => {
   
-  const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  const name = req.query.name;
+  var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
 
   Soft_skills.findAll({ where: condition })
     .then(data => {

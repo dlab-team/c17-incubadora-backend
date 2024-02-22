@@ -7,8 +7,6 @@ const Op = db.Sequelize.Op;
 
 exports.createJson = (req, res) => {
   
-  // Validate request
-  
   if (!req.body.name) {
     res.status(400).send({
       message: "Content can not be empty!"
@@ -16,12 +14,11 @@ exports.createJson = (req, res) => {
     return;
   }
   
-  // Create a Tutorial
   const roles = {
     name: req.body.name
   };
 
-  // Save Tutorial in the database
+  
   Roles.create(roles)
     .then(data => {
       res.send(data);
@@ -53,8 +50,8 @@ exports.create = (roles) => {
 
 exports.findAll = (req, res) => {
   
-  const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  const name = req.query.name;
+  var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
 
   Roles.findAll({ where: condition })
     .then(data => {

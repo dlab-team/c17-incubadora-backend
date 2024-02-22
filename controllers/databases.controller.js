@@ -5,7 +5,35 @@ const Op = db.Sequelize.Op;
 
 
 
-exports.createDatabases = (databases) => {
+
+exports.createJson = (req, res) => {
+  
+  if (!req.body.name) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  }
+  
+  const databases = {
+    name: req.body.name
+  };
+
+  
+  Databases.create(databases)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the Tutorial."
+      });
+    });
+};
+
+
+exports.create = (databases) => {
   return Databases.create({
     name: databases.name,
   })
@@ -22,8 +50,8 @@ exports.createDatabases = (databases) => {
 
 exports.findAll = (req, res) => {
   
-  const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  const name = req.query.name;
+  var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
 
   Databases.findAll({ where: condition })
     .then(data => {
