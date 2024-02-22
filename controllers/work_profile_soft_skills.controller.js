@@ -28,7 +28,7 @@ exports.createJson = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Tutorial."
+          err.message || "Some error occurred while creating the Work_profile_soft_skillss."
       });
     });
 };
@@ -87,7 +87,7 @@ exports.create = (work_profile_id, soft_skillid) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving Work_profile_soft_skillss."
+            err.message || "Some error occurred while retrieving Work_profile_soft_skills."
         });
       });
   };

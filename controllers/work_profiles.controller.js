@@ -44,7 +44,7 @@ exports.createJson = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Tutorial."
+          err.message || "Some error occurred while creating the Work_profiles."
       });
     });
 };
@@ -108,7 +108,7 @@ exports.create = (UsersId, work_profiles) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving Work_profiless."
+            err.message || "Some error occurred while retrieving Work_profiles."
         });
       });
   };

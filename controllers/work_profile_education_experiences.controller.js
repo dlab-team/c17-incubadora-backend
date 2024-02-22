@@ -28,7 +28,7 @@ exports.createJson = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Tutorial."
+          err.message || "Some error occurred while creating the Work_profile_education_experiencess."
       });
     });
 };
@@ -46,7 +46,7 @@ exports.create = (educationExperienceId, workProfileId) => {
       return work_profile_education_experiences;
     })
     .catch((err) => {
-      console.log(">> Error while creating users: ", err);
+      console.log(">> Error while creating Work_profile_education_experiencess: ", err);
     });
 };
 
@@ -86,7 +86,7 @@ exports.findAll = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving Work_profile_education_experiencess."
+          err.message || "Some error occurred while retrieving Work_profile_education_experiences."
       });
     });
 };
